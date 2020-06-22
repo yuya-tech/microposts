@@ -9,6 +9,7 @@
         <div class="collapse navbar-collapse" id="nav-bar">
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
+<<<<<<< HEAD
                 @if (Auth::check())
                     <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
                     <li class="nav-item dropdown">
@@ -23,6 +24,10 @@
                     <li class="nav-item">{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
                     <li class="nav-item">{!! link_to_route('login', 'Login', [], ['class' => 'nav-link']) !!}</li>
                 @endif
+=======
+                <li class="nav-item"><a href="#" class="nav-link">Signup</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+>>>>>>> 250fd915342b4dd0c7e3a59133956d3a1e5909e3
             </ul>
         </div>
     </nav>
