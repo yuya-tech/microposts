@@ -10,6 +10,9 @@ class MicropostsController extends Controller
 {
    public function index()
     {
+        
+        $microposts = Micropost::all();
+        
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -20,7 +23,7 @@ class MicropostsController extends Controller
                 'microposts' => $microposts,
             ];
         }
-        return view('welcome', $data);
+        return view('welcome', ['data' => $data]);
     }
 
  public function store(Request $request)

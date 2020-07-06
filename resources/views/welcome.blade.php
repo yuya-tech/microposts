@@ -2,6 +2,8 @@
 
 @section('content')
     @if (Auth::check())
+         {{ Auth::user()->name }}
+          @include('microposts.microposts',['microposts'=>$data['microposts']])
         <div class="row">
             <aside class="col-sm-4">
                 @include('users.card', ['user' => Auth::user()])
