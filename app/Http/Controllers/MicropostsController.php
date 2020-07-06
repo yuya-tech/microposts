@@ -8,11 +8,11 @@ use App\Micropost;
 
 class MicropostsController extends Controller
 {
-   public function index()
+    public function index()
     {
-        
+
         $microposts = Micropost::all();
-        
+
         $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -26,7 +26,7 @@ class MicropostsController extends Controller
         return view('welcome', ['data' => $data]);
     }
 
- public function store(Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'content' => 'required|max:191',
