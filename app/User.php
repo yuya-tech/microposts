@@ -90,6 +90,7 @@ class User extends Authenticatable
     
      public function favorites()
      {
-         belongsToMany();
+         return $this->belongsToMany(User::class);
      }
+     
 }
