@@ -66,7 +66,7 @@ class UsersController extends Controller
     public function favorites($id)
     {
         $user = User::find($id);
-        $favorites = $user->favorites()->paginate(10);
+        $favorites = $user->favorites()->paginate(5);
 
         $data = [
             'user' => $user,
@@ -76,5 +76,20 @@ class UsersController extends Controller
         $data += $this->counts($user);
 
         return view('users.favorites', $data);
+    }
+    
+    public function favorite_users($id)
+    {
+        $user = Micropost::find($id);
+        $favorite_users = $user->favorite_users()->paginate(5);
+
+        $data = [
+            'user' => $user,
+            'users' => $favorite_users,
+        ];
+
+        $data += $this->counts($user);
+
+        return view('users.favorite_users', $data);
     }
 }
