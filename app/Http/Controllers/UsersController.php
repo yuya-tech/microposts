@@ -77,19 +77,4 @@ class UsersController extends Controller
 
         return view('users.favorites', $data);
     }
-    
-    public function favorite_users($id)
-    {
-        $user = Micropost::find($id);
-        $favorite_users = $user->favorite_users()->paginate(5);
-
-        $data = [
-            'user' => $user,
-            'users' => $favorite_users,
-        ];
-
-        $data += $this->counts($user);
-
-        return view('users.favorite_users', $data);
-    }
 }
