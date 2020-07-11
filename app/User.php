@@ -26,12 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     public function microposts()
     {
         return $this->hasMany(Micropost::class);
     }
-    
+
     public function followings()
     {
         return $this->belongsToMany(User::class, 'user_follow', 'user_id', 'follow_id')->withTimestamps();
@@ -48,7 +48,7 @@ class User extends Authenticatable
         $exist = $this->is_following($userId);
         // 相手が自分自身ではないかの確認
         $its_me = $this->id == $userId;
-    
+
         if ($exist || $its_me) {
             // 既にフォローしていれば何もしない
             return false;
@@ -58,14 +58,14 @@ class User extends Authenticatable
             return true;
         }
     }
-    
+
     public function unfollow($userId)
     {
         // 既にフォローしているかの確認
         $exist = $this->is_following($userId);
         // 相手が自分自身かどうかの確認
         $its_me = $this->id == $userId;
-    
+
         if ($exist && !$its_me) {
             // 既にフォローしていればフォローを外す
             $this->followings()->detach($userId);
@@ -75,22 +75,69 @@ class User extends Authenticatable
             return false;
         }
     }
-    
+
     public function is_following($userId)
     {
         return $this->followings()->where('follow_id', $userId)->exists();
     }
-    
+
     public function feed_microposts()
     {
         $follow_user_ids = $this->followings()->pluck('users.id')->toArray();
         $follow_user_ids[] = $this->id;
         return Micropost::whereIn('user_id', $follow_user_ids);
     }
+<<<<<<< HEAD
     
      public function favorites()
      {
          return $this->belongsToMany(User::class,'user_id','micropost_id')->withTimestamps();
      }
      
+=======
+
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
+    }
+
+    public function favorite($userId)
+    {
+        // 既にフォローしているかの確認
+        $exist = $this->is_favorite($userId);
+        // 相手が自分自身ではないかの確認
+        $its_me = $this->id == $userId;
+
+        if ($exist || $its_me) {
+            // 既にフォローしていれば何もしない
+            return false;
+        } else {
+            // 未フォローであればフォローする
+            $this->favorites()->attach($userId);
+            return true;
+        }
+    }
+
+    public function unfavorite($userId)
+    {
+        // 既にフォローしているかの確認
+        $exist = $this - is_favorite($userId);
+        // 相手が自分自身かどうかの確認
+        $its_me = $this->id == $userId;
+
+        if ($exist && !$its_me) {
+            // 既にフォローしていればフォローを外す
+            $this->favorites()->detach($userId);
+            return true;
+        } else {
+            // 未フォローであれば何もしない
+            return false;
+        }
+    }
+
+    public function is_favorite($userId)
+    {
+        return $this->favorites()->where('microposts_id', $userId)->exists();
+    }
+>>>>>>> 7ea3752522ec1ebdab5b6343883c56489e81b628
 }
