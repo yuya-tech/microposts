@@ -35,6 +35,8 @@ class CreateFavoritesTable extends Migration
      *
      * @return void
      */
+    protected $table = 'favorites';
+     
     public function down()
     {
         Schema::dropIfExists('favorites');
