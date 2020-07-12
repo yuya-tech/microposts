@@ -93,19 +93,19 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
     }
 
-    public function favorite($userId)
+    public function favorite($micropostId)
     {
         // 既にフォローしているかの確認
-        $exist = $this->is_favorite($userId);
+        $exist = $this->is_favorite($micropostId);
         // 相手が自分自身ではないかの確認
-        $its_me = $this->id == $userId;
+        $its_me = $this->id == $micropostId;
 
         if ($exist || $its_me) {
             // 既にフォローしていれば何もしない
             return false;
         } else {
             // 未フォローであればフォローする
-            $this->favorites()->attach($userId);
+            $this->favorites()->attach($micropostId);
             return true;
         }
     }
