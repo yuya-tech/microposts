@@ -110,16 +110,16 @@ class User extends Authenticatable
         }
     }
 
-    public function unfavorite($userId)
+    public function unfavorite($micropostId)
     {
         // 既にフォローしているかの確認
-        $exist = $this - is_favorite($userId);
+        $exist = $this - is_favorite($micropostId);
         // 相手が自分自身かどうかの確認
         $its_me = $this->id == $userId;
 
         if ($exist && !$its_me) {
             // 既にフォローしていればフォローを外す
-            $this->favorites()->detach($userId);
+            $this->favorites()->detach($micropostId);
             return true;
         } else {
             // 未フォローであれば何もしない
@@ -127,7 +127,7 @@ class User extends Authenticatable
         }
     }
 
-    public function is_favorite($userId)
+    public function is_favorite($micropostId)
     {
         return $this->favorites()->where('micropost_id', $userId)->exists();
     }
